@@ -355,20 +355,21 @@ body {
 }
 
 .btn-attend {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: 4px 9px;
-  border-radius: 5px;
-  border: 1px solid var(--sev-critical);
-  color: var(--sev-critical);
-  background: transparent;
+  display: inline-block;
+  background: var(--sev-critical);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s;
 }
 
-.btn-attend:hover { background: var(--sev-critical); color: #fff; }
+.btn-attend:hover { background: #dc2626; }
 
 .auto-reply {
   margin-top: 12px;
