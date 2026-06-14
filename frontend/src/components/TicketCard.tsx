@@ -86,12 +86,7 @@ export function TicketCard({ ticket, attended, onAttend, onClose }: TicketCardPr
               <div className="detail-text">{ticket.reasoning}</div>
             </div>
           )}
-          {ticket.suggestedReply && (
-            <div className="detail-section">
-              <div className="detail-label">Resposta sugerida</div>
-              <div className="detail-text reply-text">{ticket.suggestedReply}</div>
-            </div>
-          )}
+
           {ticket.executedActions && ticket.executedActions.length > 0 && (
             <div className="detail-section">
               <div className="detail-label">Ações executadas</div>

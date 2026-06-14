@@ -160,7 +160,7 @@ public final class GroqLLMProvider implements LLMProvider {
         decision.put("category", category);
         decision.put("shouldEscalate", escalate);
         decision.put("suggestedReply", "Recebemos seu chamado e já estamos analisando.");
-        decision.put("reasoning", "[modo simulado] Classificado por heurística de palavras-chave.");
+        decision.put("reasoning", "[modo simulado] Classificado.");
 
         return new LLMResponse(Json.write(decision), List.of());
     }
