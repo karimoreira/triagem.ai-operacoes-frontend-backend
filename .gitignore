@@ -9,5 +9,6 @@ frontend/dist/
 # Misc
 *.log
 .env
+.env.example
 sources.txt
 docs/LINKEDIN_POST.md

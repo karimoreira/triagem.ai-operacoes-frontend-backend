@@ -6,6 +6,7 @@ interface TicketCardProps {
   attended: boolean;
   onAttend: () => void;
   onClose: () => void;
+  closed?: boolean;
 }
 
 const STATUS_LABEL: Record<Ticket["status"], string> = {
@@ -25,13 +26,13 @@ const CATEGORY_LABEL: Record<string, string> = {
   OTHER: "Outro",
 };
 
-export function TicketCard({ ticket, attended, onAttend, onClose }: TicketCardProps) {
+export function TicketCard({ ticket, attended, onAttend, onClose, closed }: TicketCardProps) {
   const [expanded, setExpanded] = useState(true);
   const sevClass = ticket.priority ? `sev-${ticket.priority}` : "";
   const hasDetails = !!ticket.reasoning || !!ticket.suggestedReply || (ticket.executedActions?.length ?? 0) > 0;
 
   return (
-    <article className={`ticket ${sevClass} ${attended ? "attended" : ""}`}>
+    <article className={`ticket ${sevClass} ${attended && !closed ? "attended" : ""}`}>
       <div className="ticket-top">
         <div>
           <div className="ticket-subject">{ticket.subject}</div>
@@ -53,16 +54,22 @@ export function TicketCard({ ticket, attended, onAttend, onClose }: TicketCardPr
         <span className={`tag status-${ticket.status}`}>
           {STATUS_LABEL[ticket.status]}
         </span>
-        {attended && <span className="tag attended-tag">Humano atendendo</span>}
+        {attended && !closed && <span className="tag attended-tag">Humano atendendo</span>}
       </div>
 
-      {ticket.status === "ESCALATED" && !attended && (
+      {closed && (
+        <div className="ticket-meta" style={{ marginTop: 8 }}>
+          <span className="tag closed-tag">Fechado por humano</span>
+        </div>
+      )}
+
+      {ticket.status === "ESCALATED" && !attended && !closed && (
         <button className="btn-attend" onClick={onAttend}>
           Atender chamado
         </button>
       )}
 
-      {attended && (
+      {attended && !closed && (
         <div className="auto-reply">
           <div className="auto-reply-label">Resposta automática enviada ao cliente</div>
           <div className="auto-reply-text">Recebemos seu chamado e já estamos analisando.</div>

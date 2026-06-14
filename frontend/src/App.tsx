@@ -8,19 +8,21 @@ export default function App() {
   const { tickets, loading, submitting, error, submit, reload } = useTickets();
   const [showForm, setShowForm] = useState(false);
   const [showResolved, setShowResolved] = useState(false);
+  const [showClosed, setShowClosed] = useState(false);
   const [attended, setAttended] = useState<Set<string>>(new Set());
-  const [closed, setClosed] = useState<Set<string>>(new Set());
+  const [closedByHuman, setClosedByHuman] = useState<Set<string>>(new Set());
 
-  const { pending, resolved } = useMemo(() => {
+  const { pending, resolved, closed } = useMemo(() => {
     const pending: Ticket[] = [];
     const resolved: Ticket[] = [];
+    const closed: Ticket[] = [];
     for (const t of tickets) {
-      if (closed.has(t.id)) continue;
+      if (closedByHuman.has(t.id)) { closed.push(t); continue; }
       if (t.status === "AUTO_RESOLVED") resolved.push(t);
       else pending.push(t);
     }
-    return { pending, resolved };
-  }, [tickets, closed]);
+    return { pending, resolved, closed };
+  }, [tickets, closedByHuman]);
 
   const stats = useMemo(() => {
     const total = tickets.length;
@@ -29,15 +31,15 @@ export default function App() {
     const triaged = tickets.filter(
       (t) => t.status !== "RECEIVED" && t.status !== "TRIAGING"
     ).length;
-    return { total, escalated, critical, triaged, resolved: resolved.length };
-  }, [tickets, resolved.length]);
+    return { total, escalated, critical, triaged, resolved: resolved.length, closed: closed.length };
+  }, [tickets, resolved.length, closed.length]);
 
   function handleAttend(ticket: Ticket) {
     setAttended((prev) => new Set(prev).add(ticket.id));
   }
 
   function handleClose(ticket: Ticket) {
-    setClosed((prev) => new Set(prev).add(ticket.id));
+    setClosedByHuman((prev) => new Set(prev).add(ticket.id));
   }
 
   return (
@@ -73,6 +75,10 @@ export default function App() {
         <div className="stat critical">
           <div className="num">{stats.escalated}</div>
           <div className="lbl">Escalados</div>
+        </div>
+        <div className="stat">
+          <div className="num">{stats.closed}</div>
+          <div className="lbl">Fechados por Humano</div>
         </div>
       </section>
 
@@ -129,7 +135,7 @@ export default function App() {
         {resolved.length > 0 && (
           <>
             <button className="toggle-resolved" onClick={() => setShowResolved(!showResolved)}>
-              {showResolved ? "▲ esconder resolvidos" : "▼ resolvidos pela IA (" + resolved.length + ")"}
+              {showResolved ? "▲ esconder" : "▼ resolvidos pela IA (" + resolved.length + ")"}
             </button>
             {showResolved && (
               <div className="ticket-list resolved-list">
@@ -138,6 +144,28 @@ export default function App() {
                     key={ticket.id}
                     ticket={ticket}
                     attended={false}
+                    onAttend={() => {}}
+                    onClose={() => {}}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {closed.length > 0 && (
+          <>
+            <button className="toggle-closed" onClick={() => setShowClosed(!showClosed)}>
+              {showClosed ? "▲ esconder" : "▼ fechados por humanos (" + closed.length + ")"}
+            </button>
+            {showClosed && (
+              <div className="ticket-list closed-list">
+                {closed.map((ticket) => (
+                  <TicketCard
+                    key={ticket.id}
+                    ticket={ticket}
+                    attended={false}
+                    closed={true}
                     onAttend={() => {}}
                     onClose={() => {}}
                   />

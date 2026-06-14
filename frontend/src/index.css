@@ -209,6 +209,43 @@ body {
   opacity: 0.7;
 }
 
+.toggle-closed {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.toggle-closed:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-faint);
+}
+
+.closed-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.closed-tag {
+  color: #6b7280;
+  border-color: #d1d5db;
+  background: #f3f4f6;
+}
+
 /* ---------- Compose panel ---------- */
 .panel {
   background: var(--bg-card);
