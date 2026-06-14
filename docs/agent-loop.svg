@@ -1,0 +1,27 @@
+<svg width="100%" viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg" role="img" font-family="system-ui, sans-serif">
+<title>Laço de decisão do agente de IA</title>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<style>
+.t{font-size:14px;font-weight:600;fill:#1a1a1a}.ts{font-size:12px;fill:#555}.arr{stroke:#888;stroke-width:1.5;fill:none}
+.gray{fill:#f1efe8;stroke:#888}.purple{fill:#eeedfe;stroke:#534ab7}.amber{fill:#faeeda;stroke:#854f0b}
+.teal{fill:#e1f5ee;stroke:#0f6e56}.green{fill:#eaf3de;stroke:#3b6d11}.box{fill:#fafafa;stroke:#ddd}
+</style>
+<rect x="40" y="40" width="180" height="56" rx="8" class="gray" stroke-width="0.5"/><text class="t" x="130" y="66" text-anchor="middle">Ticket recebido</text><text class="ts" x="130" y="84" text-anchor="middle">assunto, descrição, cliente</text>
+<line x1="220" y1="68" x2="270" y2="68" class="arr" marker-end="url(#arrow)"/>
+<rect x="270" y="40" width="180" height="56" rx="8" class="purple" stroke-width="0.5"/><text class="t" x="360" y="66" text-anchor="middle">Modelo decide</text><text class="ts" x="360" y="84" text-anchor="middle">LLM + lista de ferramentas</text>
+<line x1="360" y1="96" x2="360" y2="146" class="arr" marker-end="url(#arrow)"/>
+<rect x="270" y="146" width="180" height="56" rx="8" class="amber" stroke-width="0.5"/><text class="t" x="360" y="172" text-anchor="middle">Precisa de ferramenta?</text><text class="ts" x="360" y="190" text-anchor="middle">sim → executa · não → conclui</text>
+<text class="ts" x="200" y="170" text-anchor="middle">sim</text>
+<line x1="270" y1="174" x2="220" y2="174" class="arr" marker-end="url(#arrow)"/>
+<rect x="40" y="146" width="180" height="56" rx="8" class="teal" stroke-width="0.5"/><text class="t" x="130" y="172" text-anchor="middle">Executa ferramenta</text><text class="ts" x="130" y="190" text-anchor="middle">criar tarefa · escalar</text>
+<path d="M130 146 L130 118 L360 118 L360 96" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="245" y="112" text-anchor="middle">resultado volta ao modelo</text>
+<text class="ts" x="360" y="230" text-anchor="middle">não</text>
+<line x1="360" y1="202" x2="360" y2="252" class="arr" marker-end="url(#arrow)"/>
+<rect x="270" y="252" width="180" height="56" rx="8" class="green" stroke-width="0.5"/><text class="t" x="360" y="278" text-anchor="middle">Decisão final</text><text class="ts" x="360" y="296" text-anchor="middle">prioridade · categoria · ações</text>
+<rect x="40" y="345" width="600" height="50" rx="8" class="box" stroke-width="0.5"/>
+<text class="ts" x="60" y="367">O laço decidir → agir → observar é o que torna isto um agente, não apenas</text>
+<text class="ts" x="60" y="385">uma chamada de LLM. Há um teto de iterações que escala por segurança.</text>
+</svg>
