@@ -89,7 +89,7 @@ export default function App() {
 
       <section className="feed">
         <div className="feed-head">
-          <h2>Fila de triagem</h2>
+          <h2>Fila de triagem <span className="pending-count">{pending.length}</span></h2>
           <button className="refresh" onClick={() => void reload()}>
             ↻ atualizar
           </button>
