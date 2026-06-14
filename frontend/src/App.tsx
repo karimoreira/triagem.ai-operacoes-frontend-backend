@@ -9,16 +9,18 @@ export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [showResolved, setShowResolved] = useState(false);
   const [attended, setAttended] = useState<Set<string>>(new Set());
+  const [closed, setClosed] = useState<Set<string>>(new Set());
 
   const { pending, resolved } = useMemo(() => {
     const pending: Ticket[] = [];
     const resolved: Ticket[] = [];
     for (const t of tickets) {
+      if (closed.has(t.id)) continue;
       if (t.status === "AUTO_RESOLVED") resolved.push(t);
       else pending.push(t);
     }
     return { pending, resolved };
-  }, [tickets]);
+  }, [tickets, closed]);
 
   const stats = useMemo(() => {
     const total = tickets.length;
@@ -32,6 +34,10 @@ export default function App() {
 
   function handleAttend(ticket: Ticket) {
     setAttended((prev) => new Set(prev).add(ticket.id));
+  }
+
+  function handleClose(ticket: Ticket) {
+    setClosed((prev) => new Set(prev).add(ticket.id));
   }
 
   return (
@@ -114,6 +120,7 @@ export default function App() {
                 ticket={ticket}
                 attended={attended.has(ticket.id)}
                 onAttend={() => handleAttend(ticket)}
+                onClose={() => handleClose(ticket)}
               />
             ))}
           </div>
@@ -132,6 +139,7 @@ export default function App() {
                     ticket={ticket}
                     attended={false}
                     onAttend={() => {}}
+                    onClose={() => {}}
                   />
                 ))}
               </div>

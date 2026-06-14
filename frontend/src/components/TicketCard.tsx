@@ -5,6 +5,7 @@ interface TicketCardProps {
   ticket: Ticket;
   attended: boolean;
   onAttend: () => void;
+  onClose: () => void;
 }
 
 const STATUS_LABEL: Record<Ticket["status"], string> = {
@@ -24,7 +25,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   OTHER: "Outro",
 };
 
-export function TicketCard({ ticket, attended, onAttend }: TicketCardProps) {
+export function TicketCard({ ticket, attended, onAttend, onClose }: TicketCardProps) {
   const [expanded, setExpanded] = useState(true);
   const sevClass = ticket.priority ? `sev-${ticket.priority}` : "";
   const hasDetails = !!ticket.reasoning || !!ticket.suggestedReply || (ticket.executedActions?.length ?? 0) > 0;
@@ -59,6 +60,16 @@ export function TicketCard({ ticket, attended, onAttend }: TicketCardProps) {
         <button className="btn-attend" onClick={onAttend}>
           Atender chamado
         </button>
+      )}
+
+      {attended && (
+        <div className="auto-reply">
+          <div className="auto-reply-label">Resposta automática enviada ao cliente</div>
+          <div className="auto-reply-text">Recebemos seu chamado e já estamos analisando.</div>
+          <button className="btn-close" onClick={onClose}>
+            Fechar chamado
+          </button>
+        </div>
       )}
 
       {hasDetails && (
